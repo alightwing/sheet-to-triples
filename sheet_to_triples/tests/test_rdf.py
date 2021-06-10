@@ -56,6 +56,7 @@ class TestRDF(unittest.TestCase):
             rdf.from_identifier('test'),
             rdflib.Literal('test')
         )
+
     def test_relates_geo_name_true(self):
         for path in ('atGeoPoint', 'atGeoPoly', 'name'):
             term = {'pred': 'http://visual-meaning.com/rdf/' + path}
@@ -67,6 +68,7 @@ class TestRDF(unittest.TestCase):
             term = {'pred': path}
             with self.subTest(pred=term['pred']):
                 self.assertFalse(rdf.relates_geo_name(term))
+
     def test_relates_issue_true(self):
         self.assertTrue(
             rdf.relates_issue({'subj': 'http://visual-meaning.com/rdf/test'})
@@ -100,6 +102,7 @@ class TestRDF(unittest.TestCase):
             ]
         }
         self.assertEqual(model, expected)
+
     def test_graph_from_model(self):
         model = {
             'terms': [
