@@ -31,6 +31,11 @@ _CAPEFFECTS = {
     'vm:Brightspot': 'vm:aidsCapitalType',
 }
 
+_RAGCATEGORIES = {
+    'Red': 'vm:_judged-negative',
+    'Amber': 'vm:_judged-neutral',
+    'Green': 'vm:_judged-positive',
+}
 
 def _must(value, exception_type=ValueError):
     """Raise exception_type if value is falsey."""
@@ -104,6 +109,14 @@ class Cell:
         return _must(_CAPEFFECTS.get(self.as_type))
 
     @property
+    def as_rag_category(self):
+        # if it's an empty cell we want to return emptystring, which filters this
+        # triple from the output
+        if not self._value:
+            return self.as_text
+        return _RAGCATEGORIES.get(self._value)
+
+    @property
     def as_type(self):
         return _must(_TYPES.get(_str(self._value)[:4].lower()), TypeError)
 
@@ -133,6 +146,11 @@ class Cell:
     @property
     def as_country_code(self):
         return _resolve_country(_str(self._value)).alpha_2.lower()
+
+    @property
+    def must_exist(self):
+        if _must(self._value):
+            return ''
 
     @property
     def exists(self):
