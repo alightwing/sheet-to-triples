@@ -112,9 +112,9 @@ class Cell:
     def as_rag_category(self):
         # if it's an empty cell we want to return emptystring, which filters this
         # triple from the output
-        if not self._value:
-            return self.as_text
-        return _RAGCATEGORIES.get(self._value)
+        # if not self._value:
+        #     return self.as_text
+        return _must(_RAGCATEGORIES.get(self._value))
 
     @property
     def as_type(self):

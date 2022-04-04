@@ -25,10 +25,10 @@ class Book:
 
     def iter_rows_in_sheet(self, sheet):
         sheet = self._book[sheet]
-        while sheet.merged_cells: # <- Here's the change to make.
-            for cell_group in sheet.merged_cells:
-                val = str(cell_group.start_cell.value).strip()
-                sheet.unmerge_cells(str(cell_group))
-                for merged_cell in cell_group.cells:
-                    sheet.cell(row=merged_cell[0], column=merged_cell[1]).value = val
+        while sheet.merged_cells:
+            for merged in sheet.merged_cells:
+                mc_value = str(merged.start_cell.value).strip()
+                sheet.unmerge_cells(str(merged))
+                for merged_cell in merged.cells:
+                    sheet.cell(row=merged_cell[0], column=merged_cell[1]).value = mc_value
         return sheet.iter_rows()
